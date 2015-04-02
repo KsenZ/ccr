@@ -49,3 +49,4 @@ user.conf
 *.tar.*
 *.log
 *.log*
+*.deb*
