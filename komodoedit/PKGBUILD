@@ -1,0 +1,49 @@
+# Maintainer: KsenZ <aksenzov@gmail.com>
+
+_arch="x86_64"
+_major="9.1.0"
+_minor=15798
+
+pkgname="komodoedit"
+_bigname="Komodo-Edit"
+pkgver="${_major}_${_minor}"
+pkgrel=2
+pkgdesc="Free & Open-Source counterpart of ActiveState Komodo IDE - XUL based"
+arch=(x86_64)
+url="http://www.activestate.com/komodo-edit"
+license=('MPL')
+depends=('dbus-glib' 'glibc>=2.4' 'libjpeg>=6.2' 'gcc-libs' 'gtk2')
+optdepends=('xterm: can be used by komodo-toolbox')
+conflicts=('komodoedit' 'komodoedit-nightly' 'komodoedit-beta')
+options=('!strip')
+
+source=("http://downloads.activestate.com/Komodo/releases/${_major}/${_bigname}-${_major}-${_minor}-linux-${_arch}.tar.gz"
+        "_install.py.patch" "activestate.py.patch")
+
+md5sums=('1843095021f103574fd2ab2ae831cdd9'
+         '3f68d40c80d1baba291c3cd57d18f6c9'
+         'ac74c1495058f1b7429f03d95fcde75c')
+
+prepare() {
+  cd ${srcdir}/${_bigname}-${_major}-${_minor}-linux-${_arch}
+  sed -i "s/__VERSION__/${_major}-${minor}/" ${srcdir}/_install.py.patch
+  sed -i "s/__VERSION__/${_major}-${minor}/" ${srcdir}/activestate.py.patch
+  sed -i "s/__ARCH__/x86_64/" ${srcdir}/_install.py.patch
+  sed -i "s/__ARCH__/x86_64/" ${srcdir}/activestate.py.patch
+  patch -p0 -i ${srcdir}/_install.py.patch support/_install.py
+  patch -p0 -i ${srcdir}/activestate.py.patch INSTALLDIR/lib/python/lib/python*.*/activestate.py
+}
+
+build() {
+  echo "" > /dev/null
+}
+
+package() {
+  cd ${srcdir}/${_bigname}-${_major}-${_minor}-linux-${_arch}
+  ./install.sh -v -s -I ${pkgdir}/opt/${pkgname} --dest-dir /opt/${pkgname} 2>&1 > /dev/null
+  _dfile=${pkgdir}/opt/${pkgname}/share/desktop/${pkgname}-${_major:0:1}.desktop
+  sed -i "s#${pkgdir}##" ${_dfile}
+  install -Dm644 ${_dfile} ${pkgdir}/usr/share/applications/${pkgname}.desktop
+  install -d ${pkgdir}/usr/bin
+  ln -sf /opt/komodo-edit/bin/komodo ${pkgdir}/usr/bin/komodo
+}
