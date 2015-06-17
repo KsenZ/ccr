@@ -7,7 +7,7 @@ _minor=15798
 pkgname="komodoedit"
 _bigname="Komodo-Edit"
 pkgver="${_major}_${_minor}"
-pkgrel=2
+pkgrel=3
 pkgdesc="Free & Open-Source counterpart of ActiveState Komodo IDE - XUL based"
 arch=(x86_64)
 url="http://www.activestate.com/komodo-edit"
@@ -41,7 +41,7 @@ build() {
 package() {
   cd ${srcdir}/${_bigname}-${_major}-${_minor}-linux-${_arch}
   ./install.sh -v -s -I ${pkgdir}/opt/${pkgname} --dest-dir /opt/${pkgname} 2>&1 > /dev/null
-  _dfile=${pkgdir}/opt/${pkgname}/share/desktop/${pkgname}-${_major:0:1}.desktop
+  _dfile=${pkgdir}/opt/${pkgname}/share/desktop/komodo-edit-9.desktop
   sed -i "s#${pkgdir}##" ${_dfile}
   install -Dm644 ${_dfile} ${pkgdir}/usr/share/applications/${pkgname}.desktop
   install -d ${pkgdir}/usr/bin
