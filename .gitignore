@@ -48,6 +48,7 @@ user.conf
 *.pkg.tar.*
 *.tar.*
 *.zip
+*.rpm
 *.log
 *.log*
 *.deb*
