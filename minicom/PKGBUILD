@@ -1,0 +1,29 @@
+# Maintainer: KsenZ <aksenzov@gmail.com>
+
+pkgname=minicom
+pkgver=2.7
+pkgrel=2
+pkgdesc="A serial communication program"
+arch=('x86_64')
+url="http://alioth.debian.org/projects/minicom/"
+license=('GPL')
+depends=('bash')
+optdepends=('lrzsz: for xmodem, ymodem and zmodem file transfer protocols')
+backup=('etc/minirc.dfl')
+source=("http://alioth.debian.org/frs/download.php/file/3869/${pkgname}-${pkgver}.tar.gz")
+md5sums=('203c56c4b447f45e2301b0cc4e83da3c')
+
+build() {
+  cd "${srcdir}/${pkgname}-2.6.2"
+
+  ./configure --prefix=/usr \
+              --sysconfdir=/etc
+  make
+}
+
+package() {
+  cd "${srcdir}/${pkgname}-2.6.2"
+
+  make DESTDIR="${pkgdir}/" install
+  install -Dm644 doc/minirc.dfl ${pkgdir}/etc/minirc.dfl
+}

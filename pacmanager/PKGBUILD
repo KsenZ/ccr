@@ -2,12 +2,12 @@
 
 pkgname=pacmanager
 pkgver=4.5.5.5
-pkgrel=1
+pkgrel=2
 pkgdesc="PAC Manager, Perl/Gtk approach to connections managing"
 arch=('x86_64')
 url="http://sites.google.com/site/davidtv/"
 license=("GPL-3")
-source=("https://sourceforge.net/projects/pacmanager/files/pac-4.0/pac-${pkgver}-all.tar.gz")
+source=("http://sourceforge.net/projects/pacmanager/files/pac-4.0/pac-${pkgver}-all.tar.gz")
 depends=("perl-cairo-gobject"
 	"perl-gtk2-ex-simple-list"
 	"perl-expect"

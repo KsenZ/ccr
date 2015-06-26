@@ -2,7 +2,7 @@
 
 pkgname='perl-crypt-rijndael'
 pkgver='1.12'
-pkgrel='1'
+pkgrel='2'
 pkgdesc="AES/Rijndael Encryption Module"
 arch=('x86_64')
 license=('PerlArtistic' 'GPL')
@@ -15,7 +15,7 @@ md5sums=('5e50f9b5d8ca20ee615af1228a26d955')
 
 build() {
   PERL=/usr/bin/perl
-  DIST_DIR="${srcdir}/Crypt-Rijndael-1.11"
+  DIST_DIR="${srcdir}/Crypt-Rijndael-${pkgver}"
   export PERL_MM_USE_DEFAULT=1 PERL5LIB=""                 \
     PERL_AUTOINSTALL=--skipdeps                            \
     PERL_MM_OPT="INSTALLDIRS=vendor DESTDIR='$pkgdir'"     \
