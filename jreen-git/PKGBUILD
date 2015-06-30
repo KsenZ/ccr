@@ -1,0 +1,45 @@
+# Contributor: KsenZ <aksenzov@gmail.com>
+# Maintainer: KsenZ <aksenzov@gmail.com>
+
+_buildtype="RelWithDebInfo"
+
+##############################################################
+
+pkgname=jreen-git
+pkgver=v1.2.1.1.g6506747
+pkgrel=1
+epoch=1
+pkgdesc='Free and Opensource Jabber library, written in C++ using cross-platform framework Qt. - 
+development version'
+arch=('x86_64')
+url='http://qutim.org/jreen'
+license=('GPL2')
+depends=('libgsasl' 'qt4' 'speex')
+makedepends=('git' 'cmake')
+provides=('jreen')
+conflicts=('jreen')
+source=("${pkgname}::git://github.com/euroelessar/jreen.git")
+md5sums=('SKIP')
+
+if [[ ! ${_buildtype} == 'Release' ]] && [[ ! ${_buildtype} == 'release' ]]; then
+  options=('debug')
+fi
+
+pkgver() {
+  cd ${srcdir}/${pkgname}
+  git describe --always --tags | sed 's|-|.|g'
+}
+
+build() {
+  cd ${srcdir}/${pkgname}
+
+  cmake -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_BUILD_TYPE=${_buildtype}
+  make
+}
+
+package() {
+  cd ${srcdir}/${pkgname}
+  make DESTDIR=${pkgdir} install
+  mv ${pkgdir}/usr/lib64 ${pkgdir}/usr/lib
+}

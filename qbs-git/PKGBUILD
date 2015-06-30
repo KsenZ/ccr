@@ -1,0 +1,39 @@
+# Maintainer: KsenZ <aksenzov@gmail.com>
+
+_pkg=qbs
+pkgname=$_pkg-git
+pkgver=20150630
+pkgrel=4
+pkgdesc="The Qt Build Suite"
+arch=('x86_64')
+url="https://wiki.qt.io/Qt_Build_Suite"
+license=('LGPL')
+provides=("$_pkg")
+conflicts=("$_pkg")
+depends=('qt5-tools' 'qt5-script')
+makedepends=('git')
+
+_gitroot=git://code.qt.io/qt-labs/qbs.git
+_gitname=qbs
+_qt_dir="$(qmake -query QT_INSTALL_PREFIX)"
+
+build() {
+  cd "$srcdir"
+  msg "Connecting to GIT server...."
+  
+  if [[ -d "$_gitname" ]]; then
+    cd "$_gitname" && git pull origin
+    msg "The local files are updated."
+  else
+    git clone "$_gitroot" "$_gitname"
+    cd "$_gitname"
+  fi
+  
+  qmake-qt5 -r
+  make -j$(nproc)
+}
+
+package() {
+  cd "$srcdir"/"$_gitname"
+  make INSTALL_ROOT="${pkgdir}/${_qt_dir}" install
+}
