@@ -1,0 +1,41 @@
+# Maintainer : KsenZ <aksenzov@gmail.com>
+
+pkgname=perl-text-glob
+_pkgname=Text-Glob
+pkgver=0.09
+pkgrel=1
+pkgdesc="Match globbing patterns against text."
+arch=(any)
+url="http://search.cpan.org/dist/${_pkgname}"
+screenshot="https://d3hzxuizpdmi2q.cloudfront.net/ASFEtL1Yx9ZQ.png"
+license=('PerlArtistic' 'GPL')
+depends=(perl)
+options=('!emptydirs')
+source=(http://search.cpan.org/CPAN/authors/id/R/RC/RCLAMP/${_pkgname}-${pkgver}.tar.gz)
+sha512sums=('9b729e4ece88ad79e1b637c7f35e5e1ecae3fd7f62c408ed4f3fcac2e8e8afff32d7d805e1b0269800aada5ae609d03335d42ac54def2797d301e91fa488ae47')
+
+build() {
+  ( export PERL_MM_USE_DEFAULT=1 PERL5LIB=""                 \
+      PERL_AUTOINSTALL=--skipdeps                            \
+      PERL_MM_OPT="INSTALLDIRS=vendor DESTDIR='${pkgdir}'"     \
+      PERL_MB_OPT="--installdirs vendor --destdir '${pkgdir}'" \
+      MODULEBUILDRC=/dev/null
+
+    cd "${srcdir}"/${_pkgname}-${pkgver}
+    /usr/bin/perl Build.PL
+    /usr/bin/perl Build
+  )
+}
+
+check() {
+  cd "${srcdir}"/${_pkgname}-${pkgver}
+  ( export PERL_MM_USE_DEFAULT=1 PERL5LIB=""
+    /usr/bin/perl Build test
+  )
+}
+
+package() {
+  cd "${srcdir}"/${_pkgname}-${pkgver}
+  /usr/bin/perl Build install
+  find "${pkgdir}" -name .packlist -o -name perllocal.pod -delete
+}

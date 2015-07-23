@@ -1,0 +1,45 @@
+# Maintainer: KsenZ <aksenzov@gmail.com>
+
+pkgname='perl-rex'
+pkgver='1.3.2'
+pkgrel='7'
+pkgdesc="Remote Execution"
+arch=('any')
+license=('PerlArtistic' 'GPL')
+options=('!emptydirs')
+depends=('perl-dbi' 'perl-digest-hmac' 'perl-expect' 'perl-http-date' 'perl-json-xs'
+         'perl-list-moreutils' 'perl-net-ssh2>=0.33' 'perl-string-escape' 'perl-xml-simple'
+         'perl-yaml' 'perl-libwww' 'perl-sort-naturally' 'perl-text-glob' 'perl-test-useallmodules'
+         'perl-io-string' 'perl-term-readkey' 'perl-hash-merge')
+makedepends=()
+url='http://search.cpan.org/dist/Rex'
+source=("http://search.cpan.org/CPAN/authors/id/F/FE/FERKI/Rex-${pkgver}.tar.gz")
+md5sums=('c691664df9cc98f6dd2b49bbba271c9b')
+_distdir="Rex-${pkgver}"
+
+build() {
+  ( export PERL_MM_USE_DEFAULT=1 PERL5LIB=""                 \
+      PERL_AUTOINSTALL=--skipdeps                            \
+      PERL_MM_OPT="INSTALLDIRS=vendor DESTDIR='$pkgdir'"     \
+      PERL_MB_OPT="--installdirs vendor --destdir '$pkgdir'" \
+      MODULEBUILDRC=/dev/null
+
+    cd "$srcdir/$_distdir"
+    /usr/bin/perl Makefile.PL
+    make
+  )
+}
+
+check() {
+  cd "$srcdir/$_distdir"
+  ( export PERL_MM_USE_DEFAULT=1 PERL5LIB=""
+    make test
+  )
+}
+
+package() {
+  cd "$srcdir/$_distdir"
+  make install
+  find "$pkgdir" -name .packlist -o -name perllocal.pod -delete
+}
+
