@@ -1,8 +1,8 @@
 # Maintainer: KsenZ <aksenzov@gmail.com>
 
 _arch="x86_64"
-_major="9.1.0"
-_minor=15798
+_major="9.2.1"
+_minor=15998
 
 pkgname="komodoedit"
 _bigname="Komodo-Edit"
@@ -20,7 +20,7 @@ options=('!strip')
 source=("http://downloads.activestate.com/Komodo/releases/${_major}/${_bigname}-${_major}-${_minor}-linux-${_arch}.tar.gz"
         "_install.py.patch" "activestate.py.patch")
 
-md5sums=('1843095021f103574fd2ab2ae831cdd9'
+md5sums=('6004d7c7f47d45b418ca2cd79c3faebc'
          '3f68d40c80d1baba291c3cd57d18f6c9'
          'ac74c1495058f1b7429f03d95fcde75c')
 
