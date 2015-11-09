@@ -1,8 +1,8 @@
 # Maintainer: KsenZ <aksenzov@gmail.com>
 
 pkgname=pacmanager
-pkgver=4.5.5.5
-pkgrel=2
+pkgver=4.5.5.7
+pkgrel=1
 pkgdesc="PAC Manager, Perl/Gtk approach to connections managing"
 arch=('x86_64')
 url="http://sites.google.com/site/davidtv/"
@@ -30,7 +30,7 @@ depends=("perl-cairo-gobject"
 	"perl-xml-parser"
 	"perl-gtk2-unique")
 optdepends=('tightvnc' 'rdesktop' 'openssh' 'openssh' 'perl-gtk2-appindicator')
-md5sums=('75f4539e14fa1d4dbd0c0686e152a75a')
+md5sums=('2e27507401adc2d7d9a7631d79a7a45f')
 
 build() {
   # some patching needed
