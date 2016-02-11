@@ -1,0 +1,26 @@
+# Chakra Maintaner: KsenZ <aksenzov@gmail.com>
+
+pkgname=perl-tidy
+pkgver=20140711
+pkgrel=1
+pkgdesc="Parses and beautifies perl source"
+arch=('any')
+url="http://search.cpan.org/dist/Perl-Tidy"
+license=('GPL' 'PerlArtistic')
+depends=('perl>=5.10.0')
+options=('!emptydirs')
+source=(http://www.cpan.org/authors/id/S/SH/SHANCOCK/Perl-Tidy-$pkgver.tar.gz)
+md5sums=('b11587646b2252fccec5750ab584036b')
+
+build() {
+  cd  $srcdir/Perl-Tidy-$pkgver
+  PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor
+  make
+}
+
+package() {
+  cd  $srcdir/Perl-Tidy-$pkgver
+  make install DESTDIR=$pkgdir
+  find $pkgdir -name '.packlist' -delete
+  find $pkgdir -name '*.pod' -delete
+} 
