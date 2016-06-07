@@ -1,0 +1,37 @@
+# Maintainer: KsenZ <aksenzov@gmail.com>
+
+pkgbase=pycrypto
+pkgname=('python3-crypto')
+pkgver=2.6.1
+pkgrel=1
+arch=('x86_64')
+makedepends=('python3' 'gmp')
+url="http://www.dlitz.net/software/pycrypto/"
+pkgdesc="Collection of cryptographic algorithms and protocols, implemented for use from Python 3."
+license=('custom')
+source=(http://ftp.dlitz.net/pub/dlitz/crypto/${pkgbase}/${pkgbase}-${pkgver}.tar.gz)
+md5sums=('55a61a054aa66812daf5161a0d5d7eda')
+
+prepare() {
+  find ${pkgbase}-${pkgver}/LEGAL -type f -exec chmod 644 {} \;
+  find ${pkgbase}-${pkgver}/LEGAL -type d -exec chmod 755 {} \;
+}
+
+build() {
+  cd ${pkgbase}-${pkgver}
+  python3 setup.py build
+}
+
+package() {
+  cd ${pkgbase}-${pkgver}
+  python3 setup.py install --root="${pkgdir}" --optimize=1
+  install -m755 -d "${pkgdir}/usr/share/licenses/${pkgname}"
+  install -m644 COPYRIGHT "${pkgdir}/usr/share/licenses/${pkgname}/"
+  cp -r LEGAL "${pkgdir}/usr/share/licenses/${pkgname}/"
+}
+
+check() {
+
+  cd ${pkgbase}-${pkgver}
+  python3 setup.py test
+}
