@@ -53,3 +53,4 @@ user.conf
 *.log*
 *.deb*
 *.ttf*
+*.tgz
