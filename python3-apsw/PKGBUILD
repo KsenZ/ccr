@@ -1,0 +1,33 @@
+# Maintainer: KsenZ <aksenzov@gmail.com>
+
+pkgbase=python3-apsw
+pkgname=('python3-apsw')
+pkgver=3.12.2
+pkgrel=1
+arch=('x86_64')
+url="https://github.com/rogerbinns/apsw"
+license=('MIT')
+makedepends=('python3')
+source=("https://github.com/rogerbinns/apsw/archive/$pkgver-r1.tar.gz" "LICENSE")
+md5sums=('621b2857e05506f190b55fce66b65887'
+         'f6dd36a07db033740331b33f3962dfb1')
+
+build() {
+  cd apsw-${pkgver}-r1
+  python3 setup.py build --enable=load_extension
+}
+
+package() {
+depends=('python3' 'sqlite3>=3.7.5')
+pkgdesc="Python wrapper for SQLite"
+  cd $srcdir/apsw-${pkgver}-r1
+  python3 setup.py install --root=$pkgdir/ 
+
+  install -D -m644 $srcdir/LICENSE $pkgdir/usr/share/licenses/$pkgname/LICENSE
+}
+
+check() {
+  cd $srcdir/apsw-${pkgver}-r1
+  export PYTHONPATH="$PWD/build/lib.linux-$CARCH-3.5:$PYTHONPATH"
+  python3 setup.py test
+}
