@@ -1,7 +1,7 @@
 # Maintainer: KsenZ <aksenzov@gmail.com>
 
-pkgname=python-peewee
-pkgname=('python-peewee')
+pkgname=python3-peewee
+pkgname=('python3-peewee')
 pkgver=2.8.1
 pkgrel=1
 pkgdesc="a little orm"
@@ -23,7 +23,7 @@ check() {
   python3 runtests.py -a
 }
 
-package_python-peewee() {
+package() {
   depends=('python3')
   optdepends=('python3-psycopg2: for PostgreSQL database support'
               'mysql-python: for MySQL database support')
