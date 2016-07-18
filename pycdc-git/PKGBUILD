@@ -1,0 +1,32 @@
+# Maintainer: KsenZ <aksenzov@gmail.com>
+
+pkgname=pycdc-git
+pkgver=209.7701ed4
+pkgrel=1
+pkgdesc="C++ python bytecode disassembler and decompiler"
+arch=('x86_64')
+url="https://github.com/zrax/pycdc"
+license=('GPL3')
+makedepends=('git' 'cmake')
+source=('git+https://github.com/zrax/pycdc.git')
+sha1sums=('SKIP')
+options=(!buildflags)
+_gitname="pycdc"
+
+pkgver() {
+  cd "$srcdir/$_gitname"
+  echo "$(git rev-list --count HEAD).$(git rev-parse --short HEAD)"
+}
+
+build() {
+  cd "$srcdir/$_gitname"
+  cmake .
+  make
+}
+
+package() {
+  cd "$srcdir/$_gitname"
+  mkdir -p ${pkgdir}/usr/bin
+  install -Dm755 pycdc pycdas ${pkgdir}/usr/bin/
+}
+
