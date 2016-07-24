@@ -4,6 +4,7 @@ _sources
 _temp
 pkg
 src
+*-git
 dbg
 hdr
 *~
