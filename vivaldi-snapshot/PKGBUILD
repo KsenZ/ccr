@@ -1,7 +1,7 @@
 # Maintainer: KsenZ <aksenzov@gmail.com>
 
 pkgname=vivaldi-snapshot
-pkgver=1.3.544.25
+pkgver=1.5.655.3
 pkgrel=1
 pkgdesc='A new browser for our friends (weekly snapshot)'
 url="https://vivaldi.com"
@@ -13,18 +13,25 @@ source=("https://downloads.vivaldi.com/snapshot/vivaldi-snapshot-${pkgver}-1.x86
 depends=('gtk2' 'nss' 'libxtst' 'gconf' 'libxss' 'freetype2' 'ttf-font' 'desktop-file-utils' 'shared-mime-info' 'alsa-lib')
 optdepends=('ffmpeg: playback of proprietary formats')
 conflicts=('vivaldi')
-md5sums=('91da070b1050fee807545cb14b3b3bec')
+sha256sums=('4c0193a31f55c137a53d6d8826ea1fff2b335e290c906e58146295228ace97c0')
 
 package() {
-	cp -a {opt,usr} "$pkgdir"
-	
-	# suid sanbox
-        chmod 4755 "$pkgdir/opt/vivaldi-snapshot/vivaldi-sandbox"
+    cp -a {opt,usr} "$pkgdir"
 
-	# install icons
-	for res in 16 22 24 32 48 64 128 256; do
-	    install -Dm644 "$pkgdir/opt/vivaldi-snapshot/product_logo_${res}.png" \
-            "$pkgdir/usr/share/icons/hicolor/${res}x${res}/apps/vivaldi-snapshot.png"
-	done
+    # suid sanbox
+    chmod 4755 "$pkgdir/opt/vivaldi-snapshot/vivaldi-sandbox"
+
+    # make /usr/bin/vivaldi-snapshot available
+    binf="$pkgdir/usr/bin/vivaldi-snapshot"
+    if [[ ! -e "$binf" ]] && [[ ! -f "$binf" ]] && [[ ! -L "$binf" ]]; then
+        install -dm755 "$pkgdir/usr/bin"
+        ln -s /opt/$pkgname/$pkgname "$binf"
+    fi
+
+    # install icons
+    for res in 16 22 24 32 48 64 128 256; do
+        install -Dm644 "$pkgdir/opt/vivaldi-snapshot/product_logo_${res}.png" \
+        "$pkgdir/usr/share/icons/hicolor/${res}x${res}/apps/vivaldi-snapshot.png"
+    done
 }
 
