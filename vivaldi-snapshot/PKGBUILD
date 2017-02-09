@@ -1,7 +1,7 @@
 # Maintainer: KsenZ <aksenzov@gmail.com>
 
 pkgname=vivaldi-snapshot
-pkgver=1.7.715.3
+pkgver=1.7.735.39
 pkgrel=1
 pkgdesc='A new browser for our friends (weekly snapshot)'
 url="https://vivaldi.com"
@@ -13,7 +13,7 @@ source=("https://downloads.vivaldi.com/snapshot/vivaldi-snapshot-${pkgver}-1.x86
 depends=('gtk2' 'nss' 'libxtst' 'gconf' 'libxss' 'freetype2' 'ttf-font' 'desktop-file-utils' 'shared-mime-info' 'alsa-lib')
 optdepends=('ffmpeg: playback of proprietary formats')
 conflicts=('vivaldi')
-md5sums=('87703826cb6a47c24ced78ccb59fa6a4')
+md5sums=('52b3d153e7fd83e38055ce4fdb28e618')
 
 package() {
     cp -a {opt,usr} "$pkgdir"
